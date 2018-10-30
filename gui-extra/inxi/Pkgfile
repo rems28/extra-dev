@@ -1,0 +1,22 @@
+# Depends on: coreutils gawk grep pciutils procps-ng sed file iproute2 kmod sudo usbutils kmod xorg-xdpyinfo xorg-xprop xorg-xrandr
+
+description="script to get system information"
+url="http://inxi.org"
+packager="remy <remy@nutyx.org>"
+contributors="Greg, Tnut"
+
+name=inxi
+version=2.3.56
+release=1
+
+source=(https://sources.archlinux.org/other/community/$name/$name-$version.tar.gz)
+
+build() {
+
+  cd $SRC
+  
+  install -D -m755 inxi $PKG/usr/bin/inxi
+  install -D -m755 inxi.1.gz $PKG/usr/share/man/man1/inxi.1.gz
+  
+}
+

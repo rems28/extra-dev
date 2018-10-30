@@ -1,0 +1,30 @@
+# Depends on: 
+
+description="Client for battery, power, and thermal readings."
+url="http://sourceforge.net/projects/acpiclient"
+packager="greg<greg@nutyx.org>"
+contributors=""
+
+name=acpiclient
+version=1.7
+
+source=(http://downloads.sourceforge.net/acpiclient/acpi-$version.tar.gz)
+
+prepare() {
+echo "Fonction vide, normal..."
+}
+
+build() {
+cd acpi-$version
+./configure --prefix=/usr
+make
+}
+
+package() {
+cd acpi-$version
+make DESTDIR=$PKG install
+}
+
+uptodate() {
+echo "Fonction  vide, normal..." 
+}

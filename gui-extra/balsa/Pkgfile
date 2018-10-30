@@ -1,0 +1,47 @@
+# Depends on: aspell enchant gmime libesmtp rarian pcre gtksourceview2 gtksourceview libnotify kerberos sendmail openldap openssl sqlite webkitgtk gtkhtml procmail 
+
+description="The Balsa package contains a GNOME based mail client."
+url="https://pawsa.fedorapeople.org/balsa/"
+packager="greg <greg@nutyx.org>"
+contributors="Berlius, tnut"
+
+name=balsa
+version=2.5.3	
+release=1
+source=(http://pawsa.fedorapeople.org/balsa/$name-$version.tar.bz2
+		balsa-openssl-1.1.patch)
+ 
+prepare() {
+
+  cd $SRC/$name-$version
+  
+  patch -p1 -i ../balsa-openssl-1.1.patch
+  
+}
+
+
+build() {
+
+	cd $SRC/$name-$version
+	
+	./configure --prefix=/usr            \
+	            --sysconfdir=/etc        \
+	            --localstatedir=/var/lib \
+	            --with-ssl               \
+	            --with-rubrica           \
+	            --without-html-widget    \
+	            --without-libnotify      \
+	            --without-gtkspell       
+	make
+		
+}
+
+package() {
+
+	cd $SRC/$name-$version
+	
+	make DESTDIR=$PKG install
+	
+}
+
+

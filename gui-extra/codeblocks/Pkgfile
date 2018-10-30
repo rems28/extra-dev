@@ -1,0 +1,28 @@
+# Depends on: zip boost desktop-file-utils gamin gtk-update-icon-cache hicolor-icon-theme hunspell shared-mime-info wxgtk
+
+
+description="a cross-platform Integrated Development Environment (IDE)."
+url="http://www.codeblocks.org/"
+maintainer="The Code::Blocks Team"
+packager="remy <remy@nutyx.org>"
+contributors="tnut"
+
+name=codeblocks
+version=17.12
+release=1
+
+source=(https://downloads.sourceforge.net/codeblocks/${name}_$version.tar.xz)
+build () {
+cd $name-*
+export CPPFLAGS+=" -DBOOST_ERROR_CODE_HEADER_ONLY"
+export WX_CONFIG_PATH=/usr/bin/wx-config
+
+export CPPFLAGS+=" -fpermissive -fno-delete-null-pointer-checks"
+CXXFLAGS+=' -std=c++11'
+./bootstrap
+./configure --prefix=/usr --with-contrib-plugins=all
+sed -i 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
+
+make
+make DESTDIR=$PKG install
+}
